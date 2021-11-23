@@ -1,0 +1,19 @@
+{{page-title "Home"}}
+
+<form>
+    <PowerSelect @options={{this.model}}
+                 @selected={{this.pickedSeries}}
+                 @onChange={{this.valueChanged}}
+                 @searchField="title"
+                 @searchEnabled=true
+                 as |series|>
+        {{series.title}}
+    </PowerSelect>
+    <button type="button" onClick={{this.shuffle}}>Shuffle Series</button>
+</form>
+
+<div>
+    {{this.pickedSeries.title}}
+</div>
+
+{{outlet}}
