@@ -12,8 +12,12 @@
     <button type="button" onClick={{this.shuffle}}>Shuffle Series</button>
 </form>
 
-{{#each this.seasons as |season|}}
-    {{season.number}}
-    {{season.episodes}}
-{{/each}}
+<h1>
+{{#if this.randomSeason}}
+   Season {{this.randomSeason}} Episode {{this.randomEpisode}}
+{{else}}
+    Press Shuffle Series
+{{/if}}
+</h1>
+
 {{outlet}}
