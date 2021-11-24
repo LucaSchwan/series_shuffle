@@ -13,6 +13,7 @@ export default class IndexController extends Controller {
   }
 
   @action
-  shuffle() {
+  async shuffle() {
+    this.set('seasons', await this.pickedSeries.seasons);
   }
 }

@@ -12,8 +12,8 @@
     <button type="button" onClick={{this.shuffle}}>Shuffle Series</button>
 </form>
 
-<div>
-    {{this.pickedSeries.title}}
-</div>
-
+{{#each this.seasons as |season|}}
+    {{season.number}}
+    {{season.episodes}}
+{{/each}}
 {{outlet}}

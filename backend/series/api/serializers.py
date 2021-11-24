@@ -8,11 +8,10 @@ class seasonSerializer(serializers.ModelSerializer):
             'number',
             'title',
             'episodes',
+            'series'
         ]
 
 class seriesSerializer(serializers.ModelSerializer):
-    seasons = seasonSerializer(many=True)
-
     class Meta:
         model = Series
         fields = [
