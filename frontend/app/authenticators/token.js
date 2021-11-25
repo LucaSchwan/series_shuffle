@@ -1,20 +1,27 @@
 import Base from 'ember-simple-auth/authenticators/base';
+import Ember from 'ember';
 
 export default class CustomAuthenticator extends Base {
-  restore(data) {
+  async restore(data) {
+    let { token } = data;
+    if (token) {
+      return data;
+    } else {
+      throw 'no valid session data';
+    }
   }
 
   async authenticate(username, password) {
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
     var urlencoded = new URLSearchParams();
-    urlencoded.append("username", username);
-    urlencoded.append("password", password);
+    urlencoded.append('username', username);
+    urlencoded.append('password', password);
 
     let payload = {
       username: username,
-      password: password
+      password: password,
     };
     console.log(payload);
     let data = new FormData();
@@ -23,12 +30,12 @@ export default class CustomAuthenticator extends Base {
     let response = await fetch('http://127.0.0.1:9000/api/login', {
       method: 'POST',
       header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: urlencoded
+      body: urlencoded,
     });
 
-    if(response.ok) {
+    if (response.ok) {
       return response.json();
     } else {
       let error = await response.text();
@@ -37,5 +44,6 @@ export default class CustomAuthenticator extends Base {
   }
 
   invalidate(data) {
+    return Ember.RSVP.resolve();
   }
 }

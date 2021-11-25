@@ -8,12 +8,16 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
   host = 'http://127.0.0.1:9000';
   namespace = 'api';
 
-  @computed('session.data.authenticated.access_token')
+  @computed(
+    'session.data.authenticated.access_token',
+    'session.isAuthenticated'
+  )
   get headers() {
     let headers = {};
     if (this.session.isAuthenticated) {
       // OAuth 2
-      headers['Authorization'] = 'Token' + this.session.data.authenticated.access_token;
+      headers['Authorization'] =
+        'Token' + this.session.data.authenticated.access_token;
     }
 
     return headers;

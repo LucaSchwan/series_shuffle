@@ -1,2 +1,15 @@
 {{page-title "AddSeries"}}
-{{outlet}}
+<button type="button" onClick={{this.logout}}>Logout</button>
+<form {{on "submit" (prevent-default this.searchSeries)}}>
+    <label for="search">Search</label>
+    <input id="username" type="text" placeholder="Enter Series" value={{this.search}} onchange={{this.updateSearch}}>
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {{#if series_set}}
+        {{#each series_set as |series|}}
+            <li {{ action "createSeries" series.show.id on="click"}}>{{series.show.name}}</li>
+        {{/each}}
+    {{/if}}
+</ul>
