@@ -43,7 +43,7 @@ class seasonRudView(generics.RetrieveUpdateDestroyAPIView):
 class addSeriesSearchListView(views.APIView):
     def get(self, request, search):
         response = requests.get('https://api.tvmaze.com/search/shows?q=' + search).json()
-        return Response(response.json())
+        return Response(response)
 
 class addSeriesCreateView(views.APIView):
     def post(self, request, series_id):
