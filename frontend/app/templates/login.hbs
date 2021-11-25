@@ -1,10 +1,10 @@
 {{page-title "Login"}}
-<form>
+<form {{on "submit" (prevent-default this.authenticate)}}>
   <label for="username">Username</label>
   <input id="username" type="text" placeholder="Enter Username" value={{this.username}} onchange={{this.updateUsername}}>
   <label for="password">Password</label>
   <input id="password" type="text" placeholder="Enter Password" value={{this.password}} onchange={{this.updatePassword}}>
-  <button type="button" onClick={{this.authenticate}}>Login</button>
+  <button type="submit">Login</button>
   {{#if this.errorMessage}}
     <p>{{this.errorMessage}}</p>
   {{/if}}
