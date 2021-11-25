@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.db.models import fields
-from .models import Season, Series 
+from .models import Season, Series
+from django.views.generic import View
+from django.shortcuts import render
+from django import template
 
 class SeasonsInline(admin.TabularInline):
     model = Season
@@ -13,8 +16,6 @@ class SeriesAdmin(admin.ModelAdmin):
 
 class SeasonAdmin(admin.ModelAdmin):
     list_display = ['series', 'number']
-
-        
 
 admin.site.register(Series, SeriesAdmin)
 admin.site.register(Season, SeasonAdmin)
