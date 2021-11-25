@@ -4,6 +4,9 @@ from .models import Season, Series
 from django.views.generic import View
 from django.shortcuts import render
 from django import template
+from rest_framework.authtoken.admin import TokenAdmin
+
+TokenAdmin.raw_id_fields = ['user']
 
 class SeasonsInline(admin.TabularInline):
     model = Season
