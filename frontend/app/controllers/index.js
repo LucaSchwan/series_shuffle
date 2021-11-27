@@ -5,13 +5,29 @@ import { tracked } from '@glimmer/tracking';
 
 export default class IndexController extends Controller {
   @service store;
-  pickedSeries;
+  @tracked pickedSeries;
+  @tracked search;
+  @tracked seriesList;
+  @tracked searchedList;
   @tracked randomSeason;
   @tracked randomEpisode;
 
   @action
-  valueChanged(series) {
+  selectSeries(series, dropdown) {
     this.set('pickedSeries', series);
+    dropdown.actions.close();
+  }
+
+  @action
+  updateSeries(e) {
+    this.set('search', e.target.value);
+    if (this.search == '') {
+      this.set('searchedList', this.seriesList);
+    } else {
+      this.set('searchedList', this.seriesList.filter((series) => {
+        return series.get('title').includes(this.search);
+      }));
+    }
   }
 
   @action

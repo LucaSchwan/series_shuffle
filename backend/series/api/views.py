@@ -9,11 +9,12 @@ class seriesAPIView(mixins.CreateModelMixin, generics.ListAPIView):
     serializer_class = seriesSerializer
 
     def get_queryset(self):
-        return Series.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
+        queryset = Series.objects.all()
+        title = self.request.query_params.get('filter[title]')
+        if title  is not None:
+            queryset = queryset.filter(title=title)
+        return queryset
+    
 class seriesRudView(generics.RetrieveUpdateDestroyAPIView):
     resource_name = 'series'
     lookup_field = 'id'
