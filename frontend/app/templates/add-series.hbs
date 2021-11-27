@@ -1,15 +1,25 @@
 {{page-title "AddSeries"}}
-<button type="button" onClick={{this.logout}}>Logout</button>
-<form {{on "submit" (prevent-default this.searchSeries)}}>
-    <label for="search">Search</label>
-    <input id="username" type="text" placeholder="Enter Series" value={{this.search}} onchange={{this.updateSearch}}>
-    <button type="submit">Search</button>
-</form>
+<div class="flex justify-center items-center w-screen mb-2">
+    <form {{on "submit" (prevent-default this.searchSeries)}}>
+        <label for="search" class="block text-gray-400">Search</label>
+        <input id="search" class=" p-2 rounded-md shadow-xl focus:outline-none focus:border-transparent focus:ring-2 focus:ring-green-500"  type="text" placeholder="Enter Series" value={{this.search}} onchange={{this.updateSearch}}>
+        <button type="submit" class="bg-green-500 hover:bg-green-600 rounded-md p-2 shadow-xl text-white focus:outline-none focus:border-transparent focus:ring-2 focus:ring-green-500">Search</button>
+    </form>
+</div>
 
-<ul>
-    {{#if series_set}}
-        {{#each series_set as |series|}}
-            <li {{ action "createSeries" series.show.id on="click"}}>{{series.show.name}}</li>
+<div class="flex flex-col items-start place-items-stretch justify-start max-w-xs mx-auto">
+    {{#if this.seriesSet}}
+        {{#each this.seriesSet as |series|}}
+            <button {{on "click" (fn this.createSeries series.show.id) }} class="flex hover:border-gray-300 hover:bg-gray-300 border-solid border-2 border-gray-900 hover:text-gray-300 p-2 my-2 w-full rounded-md">
+                <p class="text-gray-900 text-left w-full" >
+                    {{series.show.name}}
+                </p >
+                {{#if series.exists}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 fill-current text-green-500 justify-self-end" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                {{/if}}
+            </button>
         {{/each}}
     {{/if}}
-</ul>
+</div>

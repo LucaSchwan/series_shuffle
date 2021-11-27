@@ -1,11 +1,17 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class IndexRoute extends Route {
-  store = service();
+  @service store;
+  @tracked seriesList;
 
-  model() {
-    const store = this.store;
-    return store.findAll('series');
+  async model() {
+    return await this.store.findAll('series');
+  }
+
+  setupController(controller, model) {
+    controller.set('seriesList', model);
+    controller.set('searchedList', model);
   }
 }

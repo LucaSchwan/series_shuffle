@@ -1,15 +1,14 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
 import { action } from "@ember/object";
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class AddSeriesController extends Controller {
-  @service session;
-
-  @action
-  logout() {
-    this.session.invalidate();
-  }
-
+  @service store;
+  @service notify;
+  @tracked search;
+  @tracked seriesSet;
+  @tracked seriesList;
 
   @action
   updateSearch(e) {
@@ -20,7 +19,11 @@ export default class AddSeriesController extends Controller {
   async searchSeries() {
     let response = await fetch('http://127.0.0.1:9000/api/add-series/search/' + this.search);
     response = await response.json();
-    this.set('series_set', response.data);
+    this.set('seriesSet', response.data);
+    this.set('seriesSet', this.seriesSet.map((series) => {
+      series.exists = this.seriesExists(series);
+      return series;
+    }));
   }
 
   @action
@@ -29,6 +32,15 @@ export default class AddSeriesController extends Controller {
       method: 'POST'
     });
     response = await response.json();
-    console.log(response.data);
+    response = response.data;
+    this.notify.info(response.message);
+  }
+
+  seriesExists(series) {
+    if(this.seriesList.filter(testSeries => testSeries.title == series.show.name).length != 0) {
+       return true;
+    } else {
+       return false;
+    }
   }
 }

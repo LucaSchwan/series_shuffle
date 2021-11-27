@@ -1,23 +1,44 @@
 {{page-title "Home"}}
 
-<form>
-    <PowerSelect @options={{this.model}}
-                 @selected={{this.pickedSeries}}
-                 @onChange={{this.valueChanged}}
-                 @searchField="title"
-                 @searchEnabled=true
-                 as |series|>
-        {{series.title}}
-    </PowerSelect>
-    <button type="button" onClick={{this.shuffle}}>Shuffle Series</button>
-</form>
+<div class="flex space-x-3 justify-center h-sreen gap-2 mt-5" >
+    <BasicDropdown class="place-items-stretch"
+                   @renderInPlace={{true}}
+                   @horizontalPosition="center"
+                   @verticalPosition="auto"
+                   as |dd|>
+        <dd.Trigger class="bg-gray-400 rounded-md p-2 shadow-xl">
+            {{#if this.pickedSeries}}
+                {{this.pickedSeries.title}}
+            {{else}}
+                Series
+            {{/if}}
+            <span class="inline-block align-middle">
+                <svg class="align-right w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                    </path>
+                </svg>
+            </span>
+        </dd.Trigger>
+        <dd.Content class="flex flex-col space-y-2 bg-gray-400 mt-1 rounded-md p-2 shadow-xl" @overlay={{true}}>
+            <form {{on "submit" (prevent-default)}}>
+                <input type="text" class="rounded-sm py-1 px-2 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-green-500 align-middle" placeholder="Enter Series" value={{this.search}} oninput={{this.updateSeries}}>
+                {{#each this.searchedList as |series|}}
+                    <button type="button" class="m-1 p-1 block hover:text-gray-300" {{on "click" (fn this.selectSeries series dd) }}>
+                        {{series.title}}
+                    </button>
+                {{/each}}
+            </form>
+        </dd.Content>
+    </BasicDropdown>
+    <button type="button" class="bg-green-500 p-2 rounded-md shadow-xl" onClick={{this.shuffle}} >Shuffle</button>
+</div>
 
-<h1>
-{{#if this.randomSeason}}
-   Season {{this.randomSeason}} Episode {{this.randomEpisode}}
-{{else}}
-    Press Shuffle Series
-{{/if}}
-</h1>
+<div class="flex justify-center h-screen mt-20 text-gray-300">
+    <h1 class="font-extrabold text-6xl">
+        {{#if this.randomSeason}}
+            Season {{this.randomSeason}} Episode {{this.randomEpisode}}
+        {{/if}}
+    </h1>
+</div>
 
 {{outlet}}
