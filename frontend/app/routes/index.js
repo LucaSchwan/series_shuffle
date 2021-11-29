@@ -4,10 +4,21 @@ import { tracked } from '@glimmer/tracking';
 
 export default class IndexRoute extends Route {
   @service store;
+  @service notify;
   @tracked seriesList;
 
   async model() {
-    return await this.store.findAll('series');
+    try {
+      return await this.store.findAll('series');
+    } catch(e) {
+      return false;
+    }
+  }
+
+  afterModel(model) {
+    if(model == false) {
+      this.notify.info('Server Connection Error');
+    }
   }
 
   setupController(controller, model) {
