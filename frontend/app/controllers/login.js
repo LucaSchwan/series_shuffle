@@ -4,13 +4,14 @@ import { action } from "@ember/object";
 
 export default class LoginController extends Controller {
   @service session;
+  @service notify;
 
   @action
   async authenticate() {
     try {
       await this.session.authenticate('authenticator:token', this.username, this.password);
     } catch(error) {
-      this.errorMessage = error.error || error;
+      this.notify.info('Unable to login');
     }
 
     if (this.session.isAuthenticated) {

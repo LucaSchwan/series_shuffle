@@ -2,6 +2,7 @@ import Base from 'ember-simple-auth/authenticators/base';
 import Ember from 'ember';
 
 export default class CustomAuthenticator extends Base {
+
   async restore(data) {
     let { token } = data;
     if (token) {
@@ -23,7 +24,7 @@ export default class CustomAuthenticator extends Base {
       username: username,
       password: password,
     };
-    console.log(payload);
+
     let data = new FormData();
     data.append('json', JSON.stringify(payload));
 

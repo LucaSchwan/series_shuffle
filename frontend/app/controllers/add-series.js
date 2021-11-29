@@ -17,23 +17,37 @@ export default class AddSeriesController extends Controller {
 
   @action
   async searchSeries() {
-    let response = await fetch('http://127.0.0.1:9000/api/add-series/search/' + this.search);
-    response = await response.json();
-    this.set('seriesSet', response.data);
-    this.set('seriesSet', this.seriesSet.map((series) => {
-      series.exists = this.seriesExists(series);
-      return series;
-    }));
+    try {
+      let response = await fetch('http://127.0.0.1:9000/api/add-series/search/' + this.search);
+      response = await response.json();
+      response = response.data;
+      if(response.message) {
+        this.notify.info(response.message);
+      } else{
+        this.set('seriesSet', response);
+        this.set('seriesSet', this.seriesSet.map((series) => {
+          series.exists = this.seriesExists(series);
+          return series;
+        }));
+      }
+    } catch(e) {
+      console.log(e);
+      this.notify.info('Server Connection Error');
+    }
   }
 
   @action
   async createSeries(id) {
-    let response = await fetch('http://127.0.0.1:9000/api/add-series/create/' + id, {
-      method: 'POST'
-    });
-    response = await response.json();
-    response = response.data;
-    this.notify.info(response.message);
+    try {
+      let response = await fetch('http://127.0.0.1:9000/api/add-series/create/' + id, {
+        method: 'POST'
+      });
+      response = await response.json();
+      response = response.data;
+      this.notify.info(response.message);
+    } catch(e) {
+      this.notify.info('Server Connection Error');
+    }
   }
 
   seriesExists(series) {
