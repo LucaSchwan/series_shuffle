@@ -1,10 +1,9 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default class AddSeriesRoute extends Route {
-  @service session;
-  @service notify;
+export default class BrowseSeriesRoute extends Route {
   @service store;
+  @service notify;
 
   async model() {
     try {
@@ -14,17 +13,10 @@ export default class AddSeriesRoute extends Route {
     }
   }
 
-  beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
-  }
-
   afterModel(model) {
     if (model == false) {
       this.notify.info('Server Connection Error');
     }
   }
-
-  setupController(controller, model) {
-    controller.set('seriesList', model);
-  }
+  
 }

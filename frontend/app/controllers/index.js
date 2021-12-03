@@ -24,9 +24,12 @@ export default class IndexController extends Controller {
     if (this.search == '') {
       this.set('searchedList', this.seriesList);
     } else {
-      this.set('searchedList', this.seriesList.filter((series) => {
-        return series.get('title').includes(this.search);
-      }));
+      this.set(
+        'searchedList',
+        this.seriesList.filter((series) => {
+          return series.get('title').includes(this.search);
+        })
+      );
     }
   }
 

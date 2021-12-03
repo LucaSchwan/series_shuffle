@@ -10,13 +10,13 @@ export default class IndexRoute extends Route {
   async model() {
     try {
       return await this.store.findAll('series');
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
 
   afterModel(model) {
-    if(model == false) {
+    if (model == false) {
       this.notify.info('Server Connection Error');
     }
   }
