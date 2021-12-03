@@ -1,44 +1,43 @@
 {{page-title "Home"}}
-
-<div class="flex gap-2 justify-center mt-5 space-x-3 h-sreen" >
-    <BasicDropdown class="place-items-stretch"
-                   @renderInPlace={{true}}
-                   @horizontalPosition="center"
-                   @verticalPosition="auto"
-                   as |dd|>
-        <dd.Trigger class="p-2 bg-gray-400 rounded-md shadow-xl">
-            {{#if this.pickedSeries}}
-                {{this.pickedSeries.title}}
-            {{else}}
-                Series
-            {{/if}}
-            <span class="inline-block align-middle">
-                <svg class="w-6 h-6 align-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
-                    </path>
-                </svg>
-            </span>
-        </dd.Trigger>
-        <dd.Content class="flex flex-col p-2 mt-1 space-y-2 bg-gray-400 rounded-md shadow-xl" @overlay={{true}}>
-            <form {{on "submit" (prevent-default)}}>
-                <input type="text" class="py-1 px-2 align-middle rounded-sm focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Enter Series" value={{this.search}} oninput={{this.updateSeries}}>
-                {{#each this.searchedList as |series|}}
-                    <button type="button" class="block p-1 m-1 hover:text-gray-300" {{on "click" (fn this.selectSeries series dd) }}>
-                        {{series.title}}
-                    </button>
-                {{/each}}
-            </form>
-        </dd.Content>
-    </BasicDropdown>
-    <button type="button" class="p-2 bg-green-500 rounded-md shadow-xl" onClick={{this.shuffle}} >Shuffle</button>
+<div class="flex flex-col space-y-24 overflow-auto">
+    <div class="flex justify-center space-x-3 w-screen" >
+        <BasicDropdown @renderInPlace={{true}}
+            @horizontalPosition="center"
+            @verticalPosition="auto"
+            as |dd|>
+            <dd.Trigger class="flex justify-between p-2 w-96 bg-gray-400 rounded-md shadow-xl">
+                <div>
+                    {{#if this.pickedSeries}}
+                        {{this.pickedSeries.title}}
+                    {{else}}
+                        Series
+                    {{/if}}
+                </div>
+                <span class="">
+                    <svg class="w-6 h-6 align-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                        </path>
+                    </svg>
+                </span>
+            </dd.Trigger>
+            <dd.Content class="flex flex-col p-2 mt-1 space-y-2 w-96 bg-gray-400 rounded-md shadow-xl" @overlay={{true}}>
+                <form {{on "submit" (prevent-default)}}>
+                    <input type="text" class="py-1 px-2 w-full rounded-sm focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none" placeholder="Enter Series" value={{this.search}} oninput={{this.updateSeries}}>
+                    {{#each this.searchResults as |series|}}
+                        <button type="button" class="block p-1 m-1 w-full text-left hover:text-gray-300" {{on "click" (fn this.selectSeries series dd) }}>
+                            {{series.title}}
+                        </button>
+                    {{/each}}
+                </form>
+            </dd.Content>
+        </BasicDropdown>
+        <button type="button" class="p-2 bg-green-500 rounded-md shadow-xl" onClick={{this.shuffle}} >Shuffle</button>
+    </div>
+    {{#if this.randomSeason}}
+        <div class="flex justify-center w-screen text-gray-300">
+            <h1 class="text-6xl font-extrabold">
+                Season {{this.randomSeason}} Episode {{this.randomEpisode}}
+            </h1>
+        </div>
+    {{/if}}
 </div>
-
-<div class="flex justify-center mt-20 h-screen text-gray-300">
-    <h1 class="text-6xl font-extrabold">
-        {{#if this.randomSeason}}
-            Season {{this.randomSeason}} Episode {{this.randomEpisode}}
-        {{/if}}
-    </h1>
-</div>
-
-{{outlet}}

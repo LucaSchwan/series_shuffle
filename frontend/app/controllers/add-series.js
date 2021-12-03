@@ -6,38 +6,38 @@ import { tracked } from '@glimmer/tracking';
 export default class AddSeriesController extends Controller {
   @service store;
   @service notify;
-  @tracked search;
-  @tracked seriesSet;
-  @tracked seriesList;
+  @tracked searchQuery;
+  @tracked searchResults;
+  @tracked savedSeries;
 
   @action
   updateSearch(e) {
-    this.set('search', e.target.value);
+    this.set('searchQuery', e.target.value);
   }
 
   @action
   async searchSeries() {
-    try {
-      let response = await fetch(
-        'http://127.0.0.1:9000/api/add-series/search/' + this.search
-      );
-      response = await response.json();
-      response = response.data;
-      if (response.message) {
-        this.notify.info(response.message);
-      } else {
-        this.set('seriesSet', response);
-        this.set(
-          'seriesSet',
-          this.seriesSet.map((series) => {
+    if(this.searchQuery != '') {
+      try {
+        let response = await fetch(
+          'http://127.0.0.1:9000/api/add-series/search/' + this.searchQuery
+        );
+        response = await response.json();
+        response = response.data;
+        if (response.message) {
+          this.notify.info(response.message);
+        } else {
+          this.set('searchResults', response.map((series) => {
             series.exists = this.seriesExists(series);
             return series;
-          })
-        );
+          }));
+        }
+      } catch (e) {
+        console.log(e);
+        this.notify.info('Server Connection Error');
       }
-    } catch (e) {
-      console.log(e);
-      this.notify.info('Server Connection Error');
+    } else{
+      this.notify.info('Enter a search query!');
     }
   }
 
@@ -60,7 +60,7 @@ export default class AddSeriesController extends Controller {
 
   seriesExists(series) {
     if (
-      this.seriesList.filter(
+      this.savedSeries.filter(
         (testSeries) => testSeries.title == series.show.name
       ).length != 0
     ) {

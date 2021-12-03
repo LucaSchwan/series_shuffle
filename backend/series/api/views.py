@@ -23,16 +23,6 @@ class seriesRudView(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         return Series.objects.all()
 
-class seasonAPIView(mixins.CreateModelMixin, generics.ListAPIView):
-    resource_name = 'season'
-    serializer_class = seasonSerializer
-
-    def get_queryset(self):
-        return Season.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
 class seasonRudView(generics.RetrieveUpdateDestroyAPIView):
     resource_name = 'season'
     lookup_field = 'id'
@@ -52,20 +42,21 @@ class addSeriesSearchListView(views.APIView):
 class addSeriesCreateView(views.APIView):
     def post(self, request, series_id):
         try:
-            series = requests.get('https://api.tvmaze.com/shows/' + str(series_id))
-            series = series.json()
+            seriesToCreate = requests.get('https://api.tvmaze.com/shows/' + str(series_id)).json()
+            print(seriesToCreate)
+            # seriesToCreate = series.json()
             try:
-                Series.objects.get(title=series['name'])
+                Series.objects.get(title=seriesToCreate['name'])
                 return Response({'message': 'Series already exists'})
             except Series.DoesNotExist:
-                # series creating functionality
-                newSeries = Series(title=series['name'], description=series['summary'])
+                newSeries = Series(title=seriesToCreate['name'], description=seriesToCreate['summary'])
                 newSeries.save()
                 seasons = requests.get('https://api.tvmaze.com/shows/' + str(series_id) + '/seasons').json()
-                for season in seasons:
-                    newSeason = Season(number=season['number'], title=season['name'], episodes=season['episodeOrder'], series=newSeries)
+                for seasonToCreate in seasons:
+                    print(season)
+                    newSeason = Season(number=seasonToCreate['number'], title=seasonToCreate['name'], episodes=seasonToCreate['episodeOrder'], series=newSeries)
                     newSeason.save()
-                    return Response({'message': 'Created series'})
+                return Response({'message': 'Created series'})
         
         except:
             return Response({'message': 'Server Error'})

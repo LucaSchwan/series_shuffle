@@ -5,7 +5,6 @@ import { tracked } from '@glimmer/tracking';
 export default class IndexRoute extends Route {
   @service store;
   @service notify;
-  @tracked seriesList;
 
   async model() {
     try {
@@ -23,6 +22,6 @@ export default class IndexRoute extends Route {
 
   setupController(controller, model) {
     controller.set('seriesList', model);
-    controller.set('searchedList', model);
+    controller.set('searchResults', model);
   }
 }

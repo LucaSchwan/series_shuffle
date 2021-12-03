@@ -6,9 +6,8 @@ import { tracked } from '@glimmer/tracking';
 export default class IndexController extends Controller {
   @service store;
   @tracked pickedSeries;
-  @tracked search;
   @tracked seriesList;
-  @tracked searchedList;
+  @tracked searchResults;
   @tracked randomSeason;
   @tracked randomEpisode;
 
@@ -20,14 +19,14 @@ export default class IndexController extends Controller {
 
   @action
   updateSeries(e) {
-    this.set('search', e.target.value);
-    if (this.search == '') {
-      this.set('searchedList', this.seriesList);
+    let searchQuery = e.target.value;
+    if (searchQuery == '') {
+      this.set('searchResults', this.seriesList);
     } else {
       this.set(
-        'searchedList',
+        'searchResults',
         this.seriesList.filter((series) => {
-          return series.get('title').includes(this.search);
+          return series.get('title').toLowerCase().includes(searchQuery.toLowerCase());
         })
       );
     }
