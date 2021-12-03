@@ -7,7 +7,7 @@
 body {
     --tw-bg-opacity: 1;
     background-color: rgba(75, 85, 99, var(--tw-bg-opacity));
-    overflow: hidden;
+    overflow: auto;
 }
 
 /* Main container */

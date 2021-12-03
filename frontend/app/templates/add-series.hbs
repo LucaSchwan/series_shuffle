@@ -10,7 +10,7 @@
 <div class="flex flex-col items-start place-items-stretch justify-start max-w-xs mx-auto">
     {{#if this.seriesSet}}
         {{#each this.seriesSet as |series|}}
-            <button {{on "click" (fn this.createSeries series.show.id) }} class="flex hover:border-gray-300 hover:bg-gray-300 border-solid border-2 border-gray-900 hover:text-gray-300 p-2 my-2 w-full rounded-md">
+            <button class="flex hover:border-gray-300 hover:bg-gray-300 border-solid border-2 border-gray-900 hover:text-gray-300 p-2 my-2 w-full rounded-md" type="button" {{on "click" (fn this.createSeries series.show.id) }}>
                 <p class="text-gray-900 text-left w-full" >
                     {{series.show.name}}
                 </p >

@@ -1,8 +1,8 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   theme: {
-    extend: {}
+    extend: {},
   },
   variants: {},
   plugins: [
@@ -10,8 +10,8 @@ module.exports = {
       return {
         // backgroundColor: theme('color.gray.600'),
         selectedTextColor: theme('color.white'),
-        borderColor: theme('color.gray.600')
+        borderColor: theme('color.gray.600'),
       };
-    })
-  ]
+    }),
+  ],
 };

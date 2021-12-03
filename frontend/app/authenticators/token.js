@@ -2,7 +2,6 @@ import Base from 'ember-simple-auth/authenticators/base';
 import Ember from 'ember';
 
 export default class CustomAuthenticator extends Base {
-
   async restore(data) {
     let { token } = data;
     if (token) {

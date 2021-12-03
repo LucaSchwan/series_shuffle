@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { action } from "@ember/object";
+import { action } from '@ember/object';
 
 export default class LoginController extends Controller {
   @service session;
@@ -9,13 +9,17 @@ export default class LoginController extends Controller {
   @action
   async authenticate() {
     try {
-      await this.session.authenticate('authenticator:token', this.username, this.password);
-    } catch(error) {
+      await this.session.authenticate(
+        'authenticator:token',
+        this.username,
+        this.password
+      );
+    } catch (error) {
       this.notify.info('Unable to login');
     }
 
     if (this.session.isAuthenticated) {
-      this.transitionToRoute('addSeries');
+      this.transitionToRoute('add-series');
     }
   }
 
@@ -23,7 +27,7 @@ export default class LoginController extends Controller {
   updateUsername(e) {
     this.set('username', e.target.value);
   }
-  
+
   @action
   updatePassword(e) {
     this.set('password', e.target.value);
