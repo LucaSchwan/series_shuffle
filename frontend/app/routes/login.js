@@ -6,7 +6,6 @@ export default class LoginRoute extends Route {
   @service session;
   @tracked username;
   @tracked password;
-  @tracked errorMessage;
 
   beforeModel(transition) {
     this.session.prohibitAuthentication('index');

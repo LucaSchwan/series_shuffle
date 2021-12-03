@@ -15,7 +15,7 @@ export default class AddSeriesRoute extends Route {
   }
 
   beforeModel(transition) {
-    this.session.requireAuthentication(transition, 'login');
+    this.session.requireAuthentication(transition, 'add-series');
   }
 
   afterModel(model) {
@@ -25,6 +25,6 @@ export default class AddSeriesRoute extends Route {
   }
 
   setupController(controller, model) {
-    controller.set('seriesList', model);
+    controller.set('savedSeries', model);
   }
 }
