@@ -1,12 +1,12 @@
 {{page-title "Home"}}
-<div class="flex flex-col space-y-24 overflow-auto">
-    <div class="flex justify-center space-x-3 w-screen" >
+<div class="flex flex-col space-y-24">
+    <div class="flex justify-center space-x-3" >
         <BasicDropdown @renderInPlace={{true}}
             @horizontalPosition="center"
             @verticalPosition="auto"
             as |dd|>
-            <dd.Trigger class="flex justify-between p-2 w-96 bg-gray-400 rounded-md shadow-xl">
-                <div>
+            <dd.Trigger class="flex justify-between p-2 w-96 bg-gray-400 rounded-md shadow-xl group">
+                <div class="text-gray-800 group-hover:text-gray-100">
                     {{#if this.pickedSeries}}
                         {{this.pickedSeries.title}}
                     {{else}}
@@ -14,7 +14,7 @@
                     {{/if}}
                 </div>
                 <span class="">
-                    <svg class="w-6 h-6 align-right" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-6 h-6 align-right text-gray-800 group-hover:text-gray-100" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
                         </path>
                     </svg>
@@ -31,7 +31,7 @@
                 </form>
             </dd.Content>
         </BasicDropdown>
-        <button type="button" class="p-2 bg-green-500 rounded-md shadow-xl" onClick={{this.shuffle}} >Shuffle</button>
+        <button type="button" class="p-2 bg-green-500 rounded-md shadow-xl hover:bg-green-600" onClick={{this.shuffle}} >Shuffle</button>
     </div>
     {{#if this.randomSeason}}
         <div class="flex justify-center w-screen text-gray-300">
