@@ -1,0 +1,12 @@
+<div class="flex justify-between items-center p-2 mb-12 w-screen bg-gray-800">
+    <nav class="flex items-center">
+        <LinkTo class="m-2 text-3xl font-bold text-gray-200 hover:text-gray-400" @route="index">Series Shuffle</LinkTo>
+        <LinkTo class="m-2 text-lg text-gray-300 hover:text-gray-400" @route="browse-series">Browse Series</LinkTo>
+        <LinkTo class="m-2 text-lg text-gray-300 hover:text-gray-400" @route="add-series">Add Series</LinkTo>
+    </nav>
+    {{#if this.session.isAuthenticated}}
+        <button class="p-2 my-2 mx-8 bg-red-500 rounded-md shadow-xl hover:bg-red-600" type="button" onClick={{this.logout}}>Logout</button>
+    {{else}}
+        <LinkTo class="p-2 my-2 mx-8 bg-green-500 rounded-md shadow-xl hover:bg-green-600" @route="login">Login</LinkTo>
+    {{/if}}
+</div>

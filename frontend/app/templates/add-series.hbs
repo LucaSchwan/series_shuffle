@@ -1,0 +1,25 @@
+{{page-title "AddSeries"}}
+<div class="flex justify-center items-center mb-2 w-screen">
+    <form {{on "submit" (prevent-default this.searchSeries)}}>
+        <label for="search" class="block text-gray-400">Search</label>
+        <input id="search" class="p-2 rounded-md shadow-xl focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none"  type="text" placeholder="Enter Series" value={{this.searchQuery}} onchange={{this.updateSearch}}>
+        <button type="submit" class="p-2 text-white bg-green-500 rounded-md shadow-xl hover:bg-green-600 focus:border-transparent focus:ring-2 focus:ring-green-500 focus:outline-none">Search</button>
+    </form>
+</div>
+
+<div class="flex flex-col justify-start items-start place-items-stretch mx-auto max-w-xs">
+    {{#if this.searchResults}}
+        {{#each this.searchResults as |series|}}
+            <button class="flex p-2 my-2 w-full rounded-md border-2 border-gray-900 border-solid shadow-lg hover:text-gray-300 hover:bg-gray-300 hover:border-gray-300 justif-around" type="button" {{on "click" (fn this.createSeries series.show.id) }}>
+                <p class="w-full text-left text-gray-900" >
+                    {{series.show.name}}
+                </p >
+                {{#if series.exists}}
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-green-500 fill-current" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                {{/if}}
+            </button>
+        {{/each}}
+    {{/if}}
+</div>
